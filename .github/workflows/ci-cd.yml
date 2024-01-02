@@ -1,0 +1,31 @@
+- **Define Workflow Structure:**
+     - Start your `ci-cd.yml` file with:
+       ```yaml
+       name: CI/CD
+       on:
+         push:
+           branches:
+             - main
+       ```
+
+  - **Specify Jobs and Steps:**
+     - Define jobs and steps within your workflow. For example:
+       ```yaml
+       jobs:
+         build:
+           runs-on: ubuntu-latest
+           steps:
+             - name: Checkout Repository
+               uses: actions/checkout@v2
+
+             - name: Set up Node.js
+               uses: actions/setup-node@v3
+               with:
+                 node-version: 14
+
+             - name: Install Dependencies
+               run: npm install
+
+             - name: Run Tests
+               run: npm test
+       ```
