@@ -1,29 +1,35 @@
-       ```yaml
-       name: CI/CD
-       on:
-         push:
-           branches:
-             - main
-       ```
+name: CI/CD
 
-  - **Specify Jobs and Steps:**
-     - Define jobs and steps within your workflow. For example:
-       ```yaml
-       jobs:
-         build:
-           runs-on: ubuntu-latest
-           steps:
-             - name: Checkout Repository
-               uses: actions/checkout@v2
+on:
+  push:
+    branches:
+      - main
 
-             - name: Set up Node.js
-               uses: actions/setup-node@v3
-               with:
-                 node-version: 14
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-             - name: Install Dependencies
-               run: npm install
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-             - name: Run Tests
-               run: npm test
-       ```
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Production
+        run: |
+          # Add your deployment script or commands here
+          echo "Deploying to production..."
